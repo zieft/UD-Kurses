@@ -218,16 +218,16 @@ def kalman_filter(x, P):
     :return: 
     """
     for n in range(len(measurements)):
-    # Measurement update
-    Z = matrix([[measurements[n]]])
-    y = Z - (H * x)
-    S = H * P * H.transpose() + R
-    K = P * H.transpose() * S.inverse()
-    x = x + (K * y)
+        # Measurement update
+        Z = matrix([[measurements[n]]])
+        y = Z - (H * x)
+        S = H * P * H.transpose() + R
+        K = P * H.transpose() * S.inverse()
+        x = x + (K * y)
 
-    # Prediction
-    x = (F * x) + u
-    P = F * P * F.transpose()
+        # Prediction
+        x = (F * x) + u
+        P = F * P * F.transpose()
 
     return x, P
 
