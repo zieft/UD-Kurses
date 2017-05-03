@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ----------
 # User Instructions:
 #
@@ -35,22 +36,55 @@ def search(grid, init, goal, cost):
 
     delta_name = ['^', '<', 'v', '>']
 
-    if len(grid) == len(grid[0]):
-        for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                grid[i][j] = 1
-                try:
-                    flag = 0
-                    for a in delta:
-                        if grid[i+a[0]][j+a[1]] == 0:
-                            flag += 1
-                except IndexError:
-                    pass
-                
+    # while not path[1:] == goal:
+    #     pos = init
+    #     grid[pos[0]][pos[1]] = 1
+    #     g = 0
+    #     try:
+    #         for i in delta:
+    #             if grid[pos[0] + i[0]][pos[1] + i[1]] == 0:
+    #                 grid[pos[0] + i[0]][pos[1] + i[1]] = 1
+    #                 g += cost
+    #     except IndexError:
+    #         pass
 
+    closed = [[0 for row in range(len(grid[0]))] for col in range(len(grid))]
+    closed[init[0]][init[1]] = 1
 
+    x = init[0]
+    y = init[1]
+    g = 0
 
-    else:
-        pass
+    open = [[g, x, y]]
+
+    found = False
+    resign = False
+
+    while found is False and resign is False:
+        if len(open) == 0:
+            resign = True
+            print('fail')
+        else:
+            open.sort()  # sort()方法按首元素递增排序
+            open.reverse()
+            next = open.pop()  # 弹出列表末尾元素
+            x = next[1]
+            y = next[2]
+            g = next[0]
+
+            if x == goal[0] and y == goal[1]:
+                found = True
+                path = next
+
+            else:
+                # expand winning element and add to new open list.
+                for i in range(len(delta)):
+                    x2 = x + delta[i][0]
+                    y2 = y + delta[i][1]
+                    if x2 >= 0 and x2 < len(grid) and y2 >= 0 and y2 < len(grid[0]):
+                        if closed[x2][y2] == 0 and grix[x2][y2] == 0:
+                            g2 = g + cost
+                            open.append([g2, x2, y2])
+                            closed[x2][y2] = 1
 
     return path
