@@ -44,10 +44,10 @@ mu = 0.
 sig = 10000.
 
 for i in range(len(measurements)):
-    Update = update(mu, sig, measurements[i], measurement_sig)
-    print('update: ', Update)
-    Pridiction = predict(mu, sig, motion[i], motion_sig)
-    print('pridict: ', Pridiction)
+    [mu, sig] = update(mu, sig, measurements[i], measurement_sig)
+    print('update: ', [mu, sig])
+    [mu, sig] = predict(mu, sig, motion[i], motion_sig)
+    print('pridict: ', [mu, sig])
 
 
 ### Example End ###
